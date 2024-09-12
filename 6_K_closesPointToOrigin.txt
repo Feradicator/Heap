@@ -1,0 +1,31 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        PriorityQueue<ArrayList<Integer>>maxHeap=new PriorityQueue<>((a,b)->
+        {
+            return Integer.compare(b.get(0),a.get(0));
+        });
+        int [][]cord=new int[k][2];
+        for(int []arr:points)
+        {
+            ArrayList<Integer>list=new ArrayList<>();
+            
+            int dist=(arr[0]*arr[0]+arr[1]*arr[1]);
+            list.add(dist);
+            list.add(arr[0]);
+            list.add(arr[1]);
+            maxHeap.add(list);
+            if(maxHeap.size()>k)
+            maxHeap.poll();
+        }
+        int x=0;
+        int y=0;
+        while(maxHeap.size()!=0)
+        {
+            ArrayList<Integer>lst=maxHeap.poll();
+            cord[x][y++]=lst.get(1);
+            cord[x++][y]=lst.get(2);
+            y=0;
+        }
+        return cord;
+    }
+}
